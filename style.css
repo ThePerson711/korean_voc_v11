@@ -182,10 +182,15 @@ body {
                     font-size: 24px;
                 }
             .cards_box {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 margin-top: calc(1vh*8);
                 width: calc(1vw*86);
                 height: calc(1vh*66);
-                background-color: red;
+                background-color: transparent;
+                border-radius: calc(1vw*6);
+                box-shadow: 0 0 calc(1vw*4) rgb(73, 73, 73);
             }
             .sound_btn {
                 margin-top: calc(1vh*2);
