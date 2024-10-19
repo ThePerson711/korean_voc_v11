@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voc</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div id="screen">
+        <div id="main">
+            <div id="mn_left">
+                <div class="box">
+                    <p class="box_title">Kr-To-Uz / Uz-To-Kr</p>
+                    <div class="box_opt">
+                        <input onclick="(this.checked)?(settings.lang = `krtouz`):(true)" id="box_inp_kr-to-uz" class="box_inp" type="radio" name="inp_lang">
+                        <p class="box_p">Kr-To-Uz</p>    
+                    </div>
+                    <div class="box_opt">
+                        <input onclick="(this.checked)?(settings.lang = `uztokr`):(true)" id="box_inp_uz-to-kr" class="box_inp" type="radio" name="inp_lang">
+                        <p class="box_p">Uz-To-Kr</p>    
+                    </div>
+                </div>
+                <div class="box">
+                    <p class="box_title">Test Type</p>
+                    <div class="box_opt">
+                        <input onclick="(this.checked)?(settings.type = `option`):(true)" id="box_inp_option" class="box_inp" type="radio" name="inp_type">
+                        <p class="box_p">Option</p>    
+                    </div>
+                    <div class="box_opt">
+                        <input onclick="(this.checked)?(settings.type = `card`):(true)" id="box_inp_card" class="box_inp" type="radio" name="inp_type">
+                        <p class="box_p">Card</p>    
+                    </div>
+                </div>
+                <div class="box">
+                    <p class="box_title">Sound</p>
+                    <div class="box_opt">
+                        <input onclick="(this.checked)?(settings.sound = true):(settings.sound = false);" class="box_inp" type="checkbox" id="box_inp_sound" checked>
+                        <p class="box_p">ON / OFF</p>
+                    </div>
+                </div>
+            </div>
+            <div id="mn_center">
+                <div class="panel_for_test">
+                    <div class="option_box">
+                        <p id="opt_p" class="option_question">Question</p>
+                        <button onclick="ChoosedOption(0);" id="opt_a1" class="option_ax">a1</button>
+                        <button onclick="ChoosedOption(1);" id="opt_a2" class="option_ax">a2</button>
+                        <button onclick="ChoosedOption(2);" id="opt_a3" class="option_ax">a3</button>
+                        <button onclick="ChoosedOption(3);" id="opt_a4" class="option_ax">a4</button>
+                    </div>
+                    <button onclick="SoundBtn();" class="sound_btn">SOUND</button>
+                </div>
+                <div class="panel_for_test"></div>
+            </div>
+            <div id="mn_right">
+                <div class="scroll_list" id="scroll_list">
+                    <div class="sl_days">
+                        <p class="sld_p">Day</p>
+                        <input class="sld_inp" type="checkbox">
+                    </div>
+                </div>
+                <div class="sl_btm">
+                    <button onclick="DaysShortSort(0)" class="slb_btn">Today</button>
+                    <button onclick="DaysShortSort(1)" class="slb_btn">Week</button>
+                    <button onclick="DaysShortSort(2)" class="slb_btn">Month</button>
+                    <button onclick="DaysShortSort(3)" class="slb_btn">All</button>
+                </div>
+            </div>
+        </div>
+        <div id="bottom">
+            <div onclick="Menu(1);" id="btm_left">Type</div>
+            <div onclick="Menu(2);" id="btm_center">Start</div>
+            <div onclick="Menu(3);" id="btm_right">Date</div>
+        </div>
+    </div>
+    <script src="voc.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
