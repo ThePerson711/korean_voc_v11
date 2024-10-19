@@ -399,10 +399,10 @@ if (ThisDevice === "PC") {
         if (Math.abs(deltaX) > CUR.a && Math.abs(deltaY) < CUR.b) {
             if (deltaX > 0) {
                 // O'ngga surildi
-                slideFlashcard("r");
+                slideFlashcard("l");
             } else {
                 // Chapga surildi
-                slideFlashcard("l");
+                slideFlashcard("r");
             }
         }
 
@@ -420,7 +420,7 @@ if (ThisDevice === "PC") {
 
 
 }
-alert("v_13")
+
 function Aylan() {
     const flashcard = document.getElementById('flashcard');
     flashcard.classList.toggle('flipped'); // "flipped" klassini qo'shadi yoki olib tashlaydi
