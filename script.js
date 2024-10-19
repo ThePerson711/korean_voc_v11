@@ -15,7 +15,7 @@ const test = {
 const CUR = {
     d: 30,
     c: 20,
-    a: 30,
+    a: 50,
     b: 30
 }
 let inp = {
