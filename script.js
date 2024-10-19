@@ -15,8 +15,8 @@ const test = {
 const CUR = {
     d: 30,
     c: 20,
-    a: 150,
-    b: 55
+    a: 30,
+    b: 30
 }
 let inp = {
     lang: {
@@ -377,10 +377,6 @@ if (ThisDevice === "PC") {
     let startX, startY;
 
     // CUR obyektini aniqlash (threshold)
-    const CUR = {
-        a: 30, // X yo'nalishi bo'yicha minimal masofa
-        b: 30  // Y yo'nalishi bo'yicha minimal masofa
-    };
 
     // Touch start hodisasi - dastlabki koordinatalarni olish
     cards_box.addEventListener('touchstart', (event) => {
