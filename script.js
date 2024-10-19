@@ -50,6 +50,10 @@ let ScrPos = {
 };
 let CrsC = false;
 let ThisDevice = "";
+let CardWords = {
+    korean: "",
+    uzbek: ""
+};
 // qurilmani tekshirish
 const userAgent = navigator.userAgent;
 if (/mobile/i.test(userAgent)) {
@@ -146,7 +150,16 @@ function StartTest() {
         StartOptionTest();
     } else if (settings.type === "card") {
         document.getElementById("mn_center").style = `transform: translateY(calc(1vh*100*(-1)));`;
+        StartCardTest();
     }
+}
+
+function StartCardTest() {
+    RandomQ = Math.floor(Math.random()*arr_for_test.length);
+    CardWords.korean = arr_for_test[RandomQ].korean;
+    CardWords.uzbek = arr_for_test[RandomQ].uzbek;
+
+    slideFlashcard("l")
 }
 
 function StartOptionTest() {
@@ -319,23 +332,19 @@ if (ThisDevice === "PC") {
         id = setInterval(() => {
             if (CrsC) {
                 if (BegP.x > ScrPos.x+CUR.d && (BegP.y-CUR.c < ScrPos.y || ScrPos.y < BegP.y+CUR.c) ) {
-                    cards_box.innerHTML = "left";   
-                    // 
+                    slideFlashcard("r");
                     clearInterval(id);                      
                 }
                 if (BegP.x < ScrPos.x-CUR.d && (BegP.y-CUR.c < ScrPos.y || ScrPos.y < BegP.y+CUR.c) ) {
-                    cards_box.innerHTML = "right";   
-                    // 
+                    slideFlashcard("l");
                     clearInterval(id);                      
                 }
                 if (BegP.y > ScrPos.y+CUR.d && (BegP.x-CUR.c < ScrPos.x || ScrPos.x < BegP.x+CUR.c) ) {
-                    cards_box.innerHTML = "up";   
-                    // 
+                    Aylan();
                     clearInterval(id);                      
                 }
                 if (BegP.y < ScrPos.y-CUR.d && (BegP.x-CUR.c < ScrPos.x || ScrPos.x < BegP.x+CUR.c) ) {
-                    cards_box.innerHTML = "down";   
-                    // 
+                    Aylan();
                     clearInterval(id);                      
                 }
             } 
@@ -380,20 +389,93 @@ if (ThisDevice === "PC") {
         const deltaY = touch.clientY - startY;
         // Surilish yo'nalishini aniqlash
             if (deltaX > CUR.a && (-CUR.b < deltaY || deltaY < CUR.b)) {
-                cards_box.innerHTML ="O'ngga surildi";
+//                cards_box.innerHTML ="O'ngga surildi";
             } 
             if (deltaX < CUR.a && (-CUR.b < deltaY || deltaY < CUR.b)) {
-                cards_box.innerHTML ="Chapga surildi";
+//                cards_box.innerHTML ="Chapga surildi";
             }
             if (deltaY > CUR.a && (-CUR.b < deltaX || deltaX < CUR.b)) {
-                cards_box.innerHTML ="Pastga surildi";
+                Aylan();
             } 
             if (deltaY < CUR.a && (-CUR.b < deltaX || deltaX < CUR.b)) {
-                cards_box.innerHTML ="Yuqoriga surildi";
+                Aylan();
             }
     });
 
 }
 
+function Aylan() {
+    const flashcard = document.getElementById('flashcard');
+    flashcard.classList.toggle('flipped'); // "flipped" klassini qo'shadi yoki olib tashlaydi
+}
 
 
+
+let currentCardIndex = 0;
+
+function updateFlashcard() {
+    const flashcard = document.getElementById('flashcard');
+    const front = flashcard.querySelector('.front h2');
+    const back = flashcard.querySelector('.back h2');
+
+    
+    front.textContent = CardWords.korean;
+    back.textContent = CardWords.uzbek;
+}
+
+function slideFlashcard(dir_) {
+
+    RandomQ = Math.floor(Math.random()*arr_for_test.length);
+    OurText = arr_for_test[RandomQ].korean;
+    CardWords.korean = arr_for_test[RandomQ].korean;
+    CardWords.uzbek = arr_for_test[RandomQ].uzbek;
+
+
+
+    const flashcard = document.getElementById('flashcard');
+    const incomingCard = document.createElement('div');
+    if (dir_ === "r") {
+        incomingCard.className = 'flashcard incoming-r';
+    } else {
+        incomingCard.className = 'flashcard incoming-l';
+    }
+    incomingCard.innerHTML = `
+        <div class="card front">
+            <h2>${CardWords.korean}</h2>
+        </div>
+        <div class="card back">
+            <h2>${CardWords.uzbek}</h2>
+        </div>
+    `;
+    document.querySelector('.flashcard-container').appendChild(incomingCard);
+
+    // Asosiy kartani kichraytirib va o'chirish
+    if (dir_ === "r") {
+        flashcard.classList.add('slide-out-r');
+    } else {
+        flashcard.classList.add('slide-out-l');
+    }
+
+    setTimeout(() => {
+        flashcard.style.visibility = 'hidden'; // Asosiy kartani yashirish
+
+        updateFlashcard();
+        
+        // O'ng tomondan kelayotgan kartani ko'rsatish
+        incomingCard.classList.add('show');
+        if (dir_ === "r") {
+            flashcard.classList.remove('slide-out-r');
+        } else {
+            flashcard.classList.remove('slide-out-l');
+        }
+
+        setTimeout(() => {
+            incomingCard.remove(); // Kirayotgan kartani olib tashlash
+        }, 600); // 600ms (animatsiya davomiyligi) dan keyin
+    }, 600); // 600ms (animatsiya davomiyligi) da
+
+    // O'zgarishdan keyin kartani ko'rsatish
+    setTimeout(() => {
+        flashcard.style.visibility = 'visible'; // Asosiy kartani qayta ko'rsatish
+    }, 1200); // Animatsiya tugagandan keyin
+}
