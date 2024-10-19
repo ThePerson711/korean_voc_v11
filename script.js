@@ -373,34 +373,51 @@ if (ThisDevice === "PC") {
         // Hodisani to'xtatish, aks holda sahifa aylanishi mumkin
         event.preventDefault();
     });*/
-
     const cards_box = document.getElementById('cards_box');
     let startX, startY;
 
+    // CUR obyektini aniqlash (threshold)
+    const CUR = {
+        a: 30, // X yo'nalishi bo'yicha minimal masofa
+        b: 30  // Y yo'nalishi bo'yicha minimal masofa
+    };
+
+    // Touch start hodisasi - dastlabki koordinatalarni olish
     cards_box.addEventListener('touchstart', (event) => {
         const touch = event.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
     });
 
+    // Touch move hodisasi - surish yo'nalishini aniqlash
     cards_box.addEventListener('touchmove', (event) => {
         const touch = event.touches[0];
         const deltaX = touch.clientX - startX;
         const deltaY = touch.clientY - startY;
-        // Surilish yo'nalishini aniqlash
-            if (deltaX > CUR.a && (-CUR.b < deltaY || deltaY < CUR.b)) {
-//                cards_box.innerHTML ="O'ngga surildi";
-            } 
-            if (deltaX < CUR.a && (-CUR.b < deltaY || deltaY < CUR.b)) {
-//                cards_box.innerHTML ="Chapga surildi";
+
+        // Gorizontal surish (chap/o'ng)
+        if (Math.abs(deltaX) > CUR.a && Math.abs(deltaY) < CUR.b) {
+            if (deltaX > 0) {
+                // O'ngga surildi
+                slideFlashcard("r");
+            } else {
+                // Chapga surildi
+                slideFlashcard("l");
             }
-            if (deltaY > CUR.a && (-CUR.b < deltaX || deltaX < CUR.b)) {
-                Aylan();
-            } 
-            if (deltaY < CUR.a && (-CUR.b < deltaX || deltaX < CUR.b)) {
-                Aylan();
+        }
+
+        // Vertikal surish (yuqoriga/pastga)
+        if (Math.abs(deltaY) > CUR.a && Math.abs(deltaX) < CUR.b) {
+            if (deltaY > 0) {
+                // Pastga surildi
+                Aylan(); // Sizning funksiyangiz
+            } else {
+                // Yuqoriga surildi
+                Aylan(); // Sizning funksiyangiz
             }
+        }
     });
+
 
 }
 
