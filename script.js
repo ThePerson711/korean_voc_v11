@@ -420,7 +420,7 @@ if (ThisDevice === "PC") {
 
 
 }
-
+alert("v_13")
 function Aylan() {
     const flashcard = document.getElementById('flashcard');
     flashcard.classList.toggle('flipped'); // "flipped" klassini qo'shadi yoki olib tashlaydi
