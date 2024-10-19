@@ -181,6 +181,12 @@ body {
                     border: solid 1px black;
                     font-size: 24px;
                 }
+            .cards_box {
+                margin-top: calc(1vh*8);
+                width: calc(1vw*86);
+                height: calc(1vh*66);
+                background-color: red;
+            }
             .sound_btn {
                 margin-top: calc(1vh*2);
                 font-size: 24px;

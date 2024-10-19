@@ -1,5 +1,6 @@
 const main = document.getElementById("main");
 const scroll_list = document.getElementById("scroll_list");
+const cards_box = document.getElementById("cards_box");
 const test = {
     option: {
         p: document.getElementById("opt_p"),
@@ -10,6 +11,11 @@ const test = {
             document.getElementById("opt_a4")
         ]
     }
+}
+const CUR = {
+    d: 30,
+    c: 20,
+    a: 50
 }
 let inp = {
     lang: {
@@ -25,7 +31,7 @@ let inp = {
 };
 let settings = {
     lang: "krtouz",
-    type: "option",
+    type: "card",
     sound: true,
     day: []
 }
@@ -33,7 +39,23 @@ let DayFromStart = "2024-10-18";
 let arr_for_test = [];
 let RightAnswer = 0;
 let OurText = "";
-
+let BegP = {
+    x: null, 
+    y: null
+}
+let ScrPos = {
+    x: 0,
+    y: 0
+};
+let CrsC = false;
+let ThisDevice = "";
+// qurilmani tekshirish
+const userAgent = navigator.userAgent;
+if (/mobile/i.test(userAgent)) {
+    ThisDevice = "Phone";
+} else {
+    ThisDevice = "PC";
+}
 //localStorage.setItem("Voc_v11_settings", JSON.stringify(settings));
 
 /*if (localStorage.getItem("Voc_v11_settings") !== null) {
@@ -45,7 +67,7 @@ let OurText = "";
 TextToSpeech("", "uz");
 DateReset();
 ResetSettings();
-Menu(1);
+Menu(2);
 
 
 function DateReset() {
@@ -158,7 +180,6 @@ function StartOptionTest() {
         test.option.a[i].innerHTML = Options[i];
     }
     if (settings.sound) {
-        console.log("0",OurText)
         setTimeout(() => {
             SoundBtn();            
         }, 250);
@@ -166,7 +187,6 @@ function StartOptionTest() {
 }
 
 function ChoosedOption(nth_) {
-    //console.log(nth_)
     if (nth_ === RightAnswer) {
         test.option.a[nth_].style = `background-color: green;`;
     } else {
@@ -274,4 +294,105 @@ function TextToSpeech(text_, lang_) {
         alert('Sorry, your browser does not support speech synthesis.');
     }
 }
-  
+//
+
+
+
+
+if (ThisDevice === "PC") {
+    cards_box.addEventListener('mousemove', (event) => {
+        // Elementning o'lchovlarini olish
+        const rect = cards_box.getBoundingClientRect();
+        // Kursor pozitsiyasini hisoblash
+        const x = (event.clientX - rect.left)/rect.width*100; // X koordinati
+        const y = (event.clientY - rect.top)/rect.height*100;  // Y koordinati
+        // Kursor pozitsiyasini ko'rsatish
+    //  PC
+        ScrPos.x = x;
+        ScrPos.y = y;
+    });
+    cards_box.addEventListener("mousedown", (event) => {
+        BegP.x = ScrPos.x;
+        BegP.y = ScrPos.y;
+        CrsC = true;
+        id = setInterval(() => {
+            if (CrsC) {
+                if (BegP.x > ScrPos.x+CUR.d && (BegP.y-CUR.c < ScrPos.y || ScrPos.y < BegP.y+CUR.c) ) {
+                    cards_box.innerHTML = "left";   
+                    // 
+                    clearInterval(id);                      
+                }
+                if (BegP.x < ScrPos.x-CUR.d && (BegP.y-CUR.c < ScrPos.y || ScrPos.y < BegP.y+CUR.c) ) {
+                    cards_box.innerHTML = "right";   
+                    // 
+                    clearInterval(id);                      
+                }
+                if (BegP.y > ScrPos.y+CUR.d && (BegP.x-CUR.c < ScrPos.x || ScrPos.x < BegP.x+CUR.c) ) {
+                    cards_box.innerHTML = "up";   
+                    // 
+                    clearInterval(id);                      
+                }
+                if (BegP.y < ScrPos.y-CUR.d && (BegP.x-CUR.c < ScrPos.x || ScrPos.x < BegP.x+CUR.c) ) {
+                    cards_box.innerHTML = "down";   
+                    // 
+                    clearInterval(id);                      
+                }
+            } 
+        }, 25);
+    })
+    cards_box.addEventListener("mouseup", (event) => {
+        BegP.x = null;
+        BegP.y = null;
+        CrsC = false;
+        clearInterval(id);
+    })
+} else {
+    /*
+    cards_box.addEventListener('touchmove', (event) => {
+        // Birinchi touch nuqtasini olish
+        const touch = event.touches[0];
+        // Elementning o'lchovlarini olish
+        const rect = cards_box.getBoundingClientRect();
+        // Barmoq pozitsiyasini hisoblash
+        const x = (touch.clientX - rect.left)/rect.width*100; // X koordinati
+        const y = (touch.clientY - rect.top)/rect.height*100;  // Y koordinati
+        // Barmoq pozitsiyasini ko'rsatish
+    // if MOBILE 
+        ScrPos.x = x;
+        ScrPos.y = y;
+        // Hodisani to'xtatish, aks holda sahifa aylanishi mumkin
+        event.preventDefault();
+    });*/
+
+    const cards_box = document.getElementById('cards_box');
+    let startX, startY;
+
+    cards_box.addEventListener('touchstart', (event) => {
+        const touch = event.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+    });
+
+    cards_box.addEventListener('touchmove', (event) => {
+        const touch = event.touches[0];
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        // Surilish yo'nalishini aniqlash
+            if (deltaX > CUR.d && (-CUR.c < deltaY || deltaY < CUR.c)) {
+                cards_box.innerHTML ="O'ngga surildi";
+            } 
+            if (deltaX < CUR.a && (-CUR.c < deltaY || deltaY < CUR.c)) {
+                cards_box.innerHTML ="Chapga surildi";
+            }
+            if (deltaY > CUR.a && (-CUR.c < deltaX || deltaX < CUR.c)) {
+                cards_box.innerHTML ="Pastga surildi";
+            } 
+            if (deltaY < CUR.a && (-CUR.c < deltaX || deltaX < CUR.c)) {
+                cards_box.innerHTML ="Yuqoriga surildi";
+            }
+    });
+
+}
+
+
+
