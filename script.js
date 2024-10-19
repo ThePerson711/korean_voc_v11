@@ -15,8 +15,8 @@ const test = {
 const CUR = {
     d: 30,
     c: 20,
-    a: 110,
-    b: 70
+    a: 150,
+    b: 55
 }
 let inp = {
     lang: {
