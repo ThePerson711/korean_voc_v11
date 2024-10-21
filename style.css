@@ -86,7 +86,9 @@ body {
         margin-top: calc(1vh*1);
     }
         .sld_p {
+            cursor: pointer;
             margin-left: calc(1vw*4);
+            text-decoration: underline;
             font-weight: bold;
         }
         .sld_inp {

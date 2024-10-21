@@ -30,6 +30,7 @@ let inp = {
     sound: document.getElementById("box_inp_sound"),
     date: []
 };
+let PhoneBool = false;
 let settings = {
     lang: "krtouz",
     type: "card",
@@ -81,7 +82,7 @@ function DateReset() {
     for (let i = 0; i <= daysBetween(DayFromStart); i++) {
         scroll_list.innerHTML += `
 <div class="sl_days">
-    <p class="sld_p">${DataPar(i)}</p>
+    <p class="sld_p" onclick="ShowWords(${i});">${DataPar(i)}</p>
     <input id="days_ckb_${i}" onclick="CheckboxClick(${i});" class="sld_inp" type="checkbox">
 </div>`;
     }
@@ -89,6 +90,23 @@ function DateReset() {
         settings.day.push(false);
         inp.date.push(document.getElementById(`days_ckb_${i}`));
     }
+}
+
+function ShowWords(date_) {
+    console.log(date_);
+
+    arr_for_show = [];
+    
+   // for (let i = 0; i <= daysBetween(DayFromStart); i++) {
+   //     if (settings.day[i]) {
+    i = date_;
+for (let j = 1; j <= 20; j++) {
+    if ((daysBetween(DayFromStart)-i)*20+j-1 < Top_1000_Voc.length) {
+        arr_for_show.push(Top_1000_Voc[    (daysBetween(DayFromStart)-i)*20+j-1   ]);                    
+    }
+}
+    console.table(arr_for_show)
+
 }
 
 function CheckboxClick(nth_) {
@@ -380,6 +398,7 @@ if (ThisDevice === "PC") {
 
     // Touch start hodisasi - dastlabki koordinatalarni olish
     cards_box.addEventListener('touchstart', (event) => {
+        PhoneBool = true;
         const touch = event.touches[0];
         startX = touch.clientX;
         startY = touch.clientY;
@@ -395,10 +414,16 @@ if (ThisDevice === "PC") {
         if (Math.abs(deltaX) > CUR.a && Math.abs(deltaY) < CUR.b) {
             if (deltaX > 0) {
                 // O'ngga surildi
-                slideFlashcard("l");
+                if (PhoneBool) {
+                    slideFlashcard("l");
+                    PhoneBool = false;
+                }
             } else {
                 // Chapga surildi
-                slideFlashcard("r");
+                if (PhoneBool) {
+                    slideFlashcard("r");
+                    PhoneBool = false;
+                }
             }
         }
 
@@ -406,10 +431,16 @@ if (ThisDevice === "PC") {
         if (Math.abs(deltaY) > CUR.a && Math.abs(deltaX) < CUR.b) {
             if (deltaY > 0) {
                 // Pastga surildi
-                Aylan(); // Sizning funksiyangiz
+                if (PhoneBool) {
+                    Aylan(); // Sizning funksiyangiz
+                    PhoneBool = false;
+                }
             } else {
                 // Yuqoriga surildi
-                Aylan(); // Sizning funksiyangiz
+                if (PhoneBool) {
+                    Aylan(); // Sizning funksiyangiz
+                    PhoneBool = false;
+                }
             }
         }
     });
