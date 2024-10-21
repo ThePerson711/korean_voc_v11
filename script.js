@@ -477,14 +477,15 @@ function updateFlashcard() {
 }
 
 function slideFlashcard(dir_) {
-
     RandomQ = Math.floor(Math.random()*arr_for_test.length);
     OurText = arr_for_test[RandomQ].korean;
-    CardWords.korean = arr_for_test[RandomQ].korean;
-    CardWords.uzbek = arr_for_test[RandomQ].uzbek;
-
-
-
+    if (settings.lang === "krtouz") {
+        CardWords.korean = arr_for_test[RandomQ].korean;
+        CardWords.uzbek = arr_for_test[RandomQ].uzbek;    
+    } else {
+        CardWords.korean = arr_for_test[RandomQ].uzbek;
+        CardWords.uzbek = arr_for_test[RandomQ].korean;    
+    }
     const flashcard = document.getElementById('flashcard');
     const incomingCard = document.createElement('div');
     if (dir_ === "r") {
@@ -493,10 +494,10 @@ function slideFlashcard(dir_) {
         incomingCard.className = 'flashcard incoming-l';
     }
     incomingCard.innerHTML = `
-        <div class="card front">
+        <div class="card front" style="transform: rotateX(0deg);">
             <h2>${CardWords.korean}</h2>
         </div>
-        <div class="card back">
+        <div class="card back" style="transform: rotateX(180deg);">
             <h2>${CardWords.uzbek}</h2>
         </div>
     `;
