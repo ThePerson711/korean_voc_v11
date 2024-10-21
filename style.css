@@ -97,6 +97,44 @@ body {
             aspect-ratio: 1/1;
             box-shadow: 0 0 4px red;
         }
+    .show_each {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: gray;
+        min-height: calc(1vh*5);
+        min-width: calc(1vw*68);
+        max-width: calc(1vw*68);
+        border-radius: calc(1vw*2);
+        border: solid 1px black;
+        margin-top: calc(1vh);
+    }
+        .show_W {
+            font-size: 18px;
+            font-weight: bold;
+            background-color: lightgray;
+            padding: calc(1vh*0.2) calc(1vw*2);
+            border-radius: calc(1vw*2);
+        }
+        #show_krW {
+            color: red;
+            margin-left: calc(1vw*3);
+        }
+        #show_uzW {
+            margin-right: calc(1vw*3);
+            color: green;
+        }
+        .show_dots {
+            flex: 1;
+            margin-left: calc(1vw*2);
+            margin-right: calc(1vw*2);
+            text-align: center;
+            font-size: 24px;
+            color: white;
+                white-space: nowrap; /* Qatorni uzaytiradi */
+                overflow: hidden;    /* Ortga qoldirilgan matnni yashiradi */
+        }
 .sl_btm {
     display: flex;
     flex-direction: row;
@@ -140,6 +178,19 @@ body {
         height: calc(1vh*92);
         background-color: transparent;
     }
+        #mn_right {
+            zoom: 1s;
+        }
+            .mnR_P {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: start;
+                min-width: calc(1vw*100);
+                min-height: calc(1vh*92);
+                background-color: transparent;
+            }
+
         #mn_center {
             transform: translateY(calc(1vh*100*(-1)));
         }

@@ -1,6 +1,8 @@
 const main = document.getElementById("main");
 const scroll_list = document.getElementById("scroll_list");
+const show_list = document.getElementById("show_list");
 const cards_box = document.getElementById("cards_box");
+const mn_right = document.getElementById("mn_right");
 const test = {
     option: {
         p: document.getElementById("opt_p"),
@@ -73,8 +75,7 @@ if (/mobile/i.test(userAgent)) {
 TextToSpeech("", "uz");
 DateReset();
 ResetSettings();
-Menu(2);
-
+Menu(3);
 
 function DateReset() {
     inp.date = [];
@@ -93,20 +94,25 @@ function DateReset() {
 }
 
 function ShowWords(date_) {
-    console.log(date_);
-
+    mn_right.style = `transform: translateY(-100%);`;
     arr_for_show = [];
-    
-   // for (let i = 0; i <= daysBetween(DayFromStart); i++) {
-   //     if (settings.day[i]) {
     i = date_;
 for (let j = 1; j <= 20; j++) {
     if ((daysBetween(DayFromStart)-i)*20+j-1 < Top_1000_Voc.length) {
         arr_for_show.push(Top_1000_Voc[    (daysBetween(DayFromStart)-i)*20+j-1   ]);                    
     }
 }
-    console.table(arr_for_show)
-
+    //console.table(arr_for_show)
+    show_list.innerHTML = "";
+    for (let i = 0; i < arr_for_show.length; i++) {
+        words_ = arr_for_show[i];
+        show_list.innerHTML += `      
+        <div class="show_each">
+            <p class="show_W" id="show_krW" onclick="SoundShows(${i});">${words_.korean}</p>
+            <p class="show_dots">&#x2022; &#x2022; &#x2022; &#x2022; &#x2022; &#x2022; &#x2022; &#x2022; &#x2022; &#x2022; &#x2022; &#x2022;</p>
+            <p class="show_W" id="show_uzW">${words_.uzbek}</p>
+        </div>`;
+    }
 }
 
 function CheckboxClick(nth_) {
@@ -302,6 +308,9 @@ function getDateNDaysAgo(daysAgo) {
     return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 }
 //
+function SoundShows(num_) {
+    TextToSpeech(arr_for_show[num_].korean, "kr");
+}
 // Converts Text to Speech {en,uz,ru,kr}
 function TextToSpeech(text_, lang_) {
     if ('speechSynthesis' in window) {
@@ -516,6 +525,7 @@ function slideFlashcard(dir_) {
         setTimeout(() => {
             incomingCard.remove(); // Kirayotgan kartani olib tashlash
         }, 600); // 600ms (animatsiya davomiyligi) dan keyin
+        SoundBtn();
     }, 600); // 600ms (animatsiya davomiyligi) da
 
     // O'zgarishdan keyin kartani ko'rsatish

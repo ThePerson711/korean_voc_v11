@@ -53,7 +53,6 @@
                 </div>
                 <div class="panel_for_test">
                     <div class="cards_box" id="cards_box">
-
                         <div class="flashcard-container">
                             <div class="flashcard" id="flashcard">
                                 <div class="card front">
@@ -63,24 +62,32 @@
                                     <h2></h2>
                                 </div>
                             </div>
-                          </div>
-
+                        </div>
                     </div>
                     <button onclick="SoundBtn();" class="sound_btn">SOUND</button>
                 </div>
             </div>
             <div id="mn_right">
-                <div class="scroll_list" id="scroll_list">
-                    <div class="sl_days">
-                        <p class="sld_p">Day</p>
-                        <input class="sld_inp" type="checkbox">
+                <div class="mnR_P">
+                    <div class="scroll_list" id="scroll_list">
+                        <div class="sl_days">
+                            <p class="sld_p">Day</p>
+                            <input class="sld_inp" type="checkbox">
+                        </div>
+                    </div>
+                    <div class="sl_btm">
+                        <button onclick="DaysShortSort(0)" class="slb_btn">Today</button>
+                        <button onclick="DaysShortSort(1)" class="slb_btn">Week</button>
+                        <button onclick="DaysShortSort(2)" class="slb_btn">Month</button>
+                        <button onclick="DaysShortSort(3)" class="slb_btn">All</button>
                     </div>
                 </div>
-                <div class="sl_btm">
-                    <button onclick="DaysShortSort(0)" class="slb_btn">Today</button>
-                    <button onclick="DaysShortSort(1)" class="slb_btn">Week</button>
-                    <button onclick="DaysShortSort(2)" class="slb_btn">Month</button>
-                    <button onclick="DaysShortSort(3)" class="slb_btn">All</button>
+                <div class="mnR_P">
+                    <div class="scroll_list" id="show_list">
+                        </div>
+                    <div class="sl_btm">
+                        <button class="slb_btn" onclick="mn_right.style = `transform: translateY(0%);`;">BACK</button>
+                    </div>
                 </div>
             </div>
         </div>
